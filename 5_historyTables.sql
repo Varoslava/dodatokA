@@ -1,9 +1,8 @@
 ﻿USE Pharmacy;
 GO
 
--- =======================
--- 1. Medicine
--- =======================
+-- Medicine
+    
 ALTER TABLE Medicine
 ADD ValidFrom DATETIME2 GENERATED ALWAYS AS ROW START HIDDEN
     CONSTRAINT DF_Medicine_ValidFrom DEFAULT SYSUTCDATETIME(),
@@ -16,9 +15,9 @@ ALTER TABLE Medicine
 SET (SYSTEM_VERSIONING = ON (HISTORY_TABLE = dbo.Medicine_History));
 GO
 
--- =======================
--- 2. Supply
--- =======================
+    
+-- Supply
+    
 ALTER TABLE Supply
 ADD ValidFrom DATETIME2 GENERATED ALWAYS AS ROW START HIDDEN
     CONSTRAINT DF_Supply_ValidFrom DEFAULT SYSUTCDATETIME(),
@@ -31,9 +30,9 @@ ALTER TABLE Supply
 SET (SYSTEM_VERSIONING = ON (HISTORY_TABLE = dbo.Supply_History));
 GO
 
--- =======================
--- 3. DetailsSupply
--- =======================
+
+-- DetailsSupply
+
 ALTER TABLE DetailsSupply
 ADD ValidFrom DATETIME2 GENERATED ALWAYS AS ROW START HIDDEN
     CONSTRAINT DF_DetailsSupply_ValidFrom DEFAULT SYSUTCDATETIME(),
@@ -46,9 +45,9 @@ ALTER TABLE DetailsSupply
 SET (SYSTEM_VERSIONING = ON (HISTORY_TABLE = dbo.DetailsSupply_History));
 GO
 
--- =======================
--- 4. Pharmacists
--- =======================
+    
+-- Pharmacists
+
 ALTER TABLE Pharmacists
 ADD ValidFrom DATETIME2 GENERATED ALWAYS AS ROW START HIDDEN
     CONSTRAINT DF_Pharmacists_ValidFrom DEFAULT SYSUTCDATETIME(),
@@ -61,9 +60,9 @@ ALTER TABLE Pharmacists
 SET (SYSTEM_VERSIONING = ON (HISTORY_TABLE = dbo.Pharmacists_History));
 GO
 
--- =======================
--- 5. Clients
--- =======================
+
+-- Clients
+
 ALTER TABLE Clients
 ADD ValidFrom DATETIME2 GENERATED ALWAYS AS ROW START HIDDEN
     CONSTRAINT DF_Clients_ValidFrom DEFAULT SYSUTCDATETIME(),
@@ -76,6 +75,7 @@ ALTER TABLE Clients
 SET (SYSTEM_VERSIONING = ON (HISTORY_TABLE = dbo.Clients_History));
 GO
 
+    
 -- Medicine
 
 UPDATE Medicine
@@ -92,6 +92,19 @@ WHERE Name = N'Ібупрофен';
 SELECT *
 FROM Medicine_History
 WHERE Name = N'Ібупрофен';
+
+UPDATE Medicine
+SET Dose = 130
+WHERE MedicineId = 3;
+
+SELECT *, ValidFrom, ValidTo
+FROM Medicine
+WHERE MedicineId = 3;
+
+SELECT *
+FROM Medicine_History
+
+WHERE MedicineId = 3;
 
 
 -- Supply
@@ -133,6 +146,7 @@ SELECT *
 FROM DetailsSupply_History
 WHERE DetailsSupplyId IN (2, 5);
 
+
 -- Pharmacists
 
 UPDATE Pharmacists
@@ -154,6 +168,7 @@ SELECT *
 FROM Pharmacists_History
 WHERE PharmacistId IN (2, 7);
 
+
 -- Clients
 
 UPDATE Clients
@@ -174,28 +189,3 @@ WHERE ClientId IN (1, 4);
 SELECT *
 FROM Clients_History
 WHERE ClientId IN (1, 4);
-
-
-
-
-
-
-
-
-
-
-
-
---------------------------------
-
-UPDATE Medicine
-SET Dose = 130
-WHERE MedicineId = 3;
-
-SELECT *, ValidFrom, ValidTo
-FROM Medicine
-WHERE MedicineId = 3;
-
-SELECT *
-FROM Medicine_History
-WHERE MedicineId = 3;
