@@ -84,11 +84,3 @@ CREATE TABLE Sales(
     SaleDetailsId INT NOT NULL,
     TotalAmount INT NOT NULL
 );
-
-
-/*USE master;
-GO
-ALTER DATABASE Pharmacy SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-GO
-DROP DATABASE Pharmacy;
-GO*/
