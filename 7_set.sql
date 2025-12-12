@@ -32,15 +32,11 @@ BEGIN CATCH
 END CATCH
 
 END
-
-
+    
 
 DECLARE @id INT;
 EXEC sp_SetReleaseForm @id OUTPUT, N'Краплі';
 SELECT @id;
-
-
-
 
 
 CREATE OR ALTER PROCEDURE dbo.sp_SetMedicine
@@ -106,8 +102,6 @@ EXEC sp_SetMedicine @id2 OUTPUT, N'Нурофен', 60, 2, 15, N'';
 SELECT @id2; 
 
 EXEC sp_SetMedicine @MedicineId = 5, @Price = 85;
-
-
 
 
 
@@ -260,6 +254,7 @@ SELECT @id;
 EXEC sp_SetDetailsSupply 
     @DetailsSupplyId = 1,
     @Count = 5;
+
 
 
 
