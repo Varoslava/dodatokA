@@ -1,7 +1,7 @@
 ﻿USE Pharmacy;
 GO
 
-/* Зовнішні ключі (FOREIGN KEYS) */
+-- Зовнішні ключі (FOREIGN KEYS)
 
 ALTER TABLE Medicine
 ADD CONSTRAINT FK_Medicine_ReleaseForm FOREIGN KEY (ReleaseFormId) REFERENCES ReleaseForm(ReleaseFormId);
@@ -32,7 +32,7 @@ ADD CONSTRAINT FK_SaleDetails_Medicine FOREIGN KEY (MedicineId) REFERENCES Medic
 GO
 
 
-/* Унікальні обмеження (UNIQUE) */
+-- Унікальні обмеження (UNIQUE) 
 
 ALTER TABLE Suppliers
 ADD CONSTRAINT UQ_Suppliers_Phone UNIQUE (Phone);
@@ -51,7 +51,7 @@ ADD CONSTRAINT UQ_Storage_CellNumber UNIQUE (CellNumber);
 GO
 
 
-/* Перевірки (CHECK) */
+-- Перевірки (CHECK)
 
 -- Імена, де не допускаються цифри
 
@@ -87,7 +87,7 @@ ADD CONSTRAINT CK_Clients_PhoneFormat CHECK (
     OR Phone LIKE '+380[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'
 );
 
--- Дата народження у межах (для прикладу)
+-- Дата народження у межах
 ALTER TABLE Clients
 ADD CONSTRAINT CK_Clients_BirthDate CHECK (BirthDate BETWEEN '1955-01-01' AND GETDATE());
 
@@ -112,7 +112,7 @@ ADD CONSTRAINT CK_Sales_TotalAmount CHECK (TotalAmount > 0);
 GO
 
 
-/* Значення за замовчуванням (DEFAULT) */
+-- Значення за замовчуванням (DEFAULT)
 
 ALTER TABLE Clients
 ADD CONSTRAINT DF_Clients_HasPrescription DEFAULT 0 FOR HasPrescription;
@@ -131,7 +131,7 @@ ADD CONSTRAINT DF_DetailsSupply_CellId DEFAULT 1 FOR CellId;
 GO
 
 
-/* Перевірка обмежень */
+-- Перевірка обмежень
 
 -- Помилка: цифри в імені
 INSERT INTO Clients (Surname, Name, Paternal, BirthDate, Phone, HasPrescription, DiscountType, Address)
@@ -164,5 +164,3 @@ GO
 
 SELECT * FROM Suppliers WHERE  NOT(   Phone LIKE '0[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'OR 
 Phone LIKE '+380[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]')
-
--- DELETE FROM Suppliers WHERE SupplierID = 6
