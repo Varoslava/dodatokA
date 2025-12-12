@@ -33,10 +33,8 @@ BEGIN
         SELECT 
             DS.MedicineId,
 
-            -- список комірок через кому
             STRING_AGG(CAST(S.CellNumber AS NVARCHAR(20)), ', ') AS CellNumbers,
 
-            -- загальна кількість препарату
             SUM(DS.[Count]) AS TotalCount
         FROM DetailsSupply DS
         LEFT JOIN Storage S ON DS.CellId = S.CellId
@@ -52,13 +50,11 @@ BEGIN
         M.Price,
         M.Producer,
 
-        -- якщо є — показати комірки, якщо нема — NULL
         CASE WHEN St.TotalCount IS NULL OR St.TotalCount = 0 
              THEN NULL
              ELSE St.CellNumbers
         END AS CellNumber,
 
-        -- якщо є — показати кількість, якщо нема — NULL
         CASE WHEN St.TotalCount IS NULL OR St.TotalCount = 0 
              THEN NULL
              ELSE St.TotalCount
@@ -112,11 +108,6 @@ EXEC sp_GetMedicine
     @SortColumn = 'Price',
     @SortDirection = 1;
 EXEC sp_GetMedicine @MedicineId = 7;
--- залишок на складі і перевірки чи є на складі (перевірка на 0 і >)
-
-
-
-
 
 
 CREATE OR ALTER PROCEDURE dbo.sp_GetSuppliers
@@ -135,7 +126,6 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Перевірка коректності ID
     IF @SupplierId IS NOT NULL
        AND NOT EXISTS(SELECT 1 FROM Suppliers WHERE SupplierId = @SupplierId)
     BEGIN
@@ -211,7 +201,6 @@ CREATE OR ALTER PROCEDURE dbo.sp_GetClients
     @HasPrescription BIT = NULL,
     @Address NVARCHAR(200) = NULL,
 
-    -- НОВІ ПАРАМЕТРИ ФІЛЬТРУВАННЯ ЗА ПЕРІОД ПОКУПОК
     @StartDate DATE = NULL,
     @EndDate DATE = NULL,
 
